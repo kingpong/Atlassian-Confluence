@@ -395,8 +395,9 @@ sub getServerInfo {
 sub getPage {
   my ($self, $pageId) = @_;
   carp "getPage" if $CONF_TRACE;
-  my $res = _do_rpc_request($self, "getPage", string($pageId));
-  return $res;
+  my @service_args = splice(@_,0,2);
+  return $self->_do_rpc_request("getPage",
+    map { Atlassian::Confluence::string($_) } @service_args);
 }
 sub getPageHistory {
   my ($self, $pageId) = @_;
